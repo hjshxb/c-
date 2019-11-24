@@ -44,6 +44,7 @@ public:
     void remove(T key);    // 删除
     void buildgraph();    // 建立二叉树的图
     void showgraph();    // 显示图
+    void Topsoft();      // 拓扑排序
     template <typename U>
     friend std::ostream& operator<<(std::ostream &os, Bstree<U> &bstree);
     template <typename U>
@@ -367,6 +368,16 @@ template <typename T>
 void Bstree<T>::showgraph()
 {
     graph.show();
+}
+
+
+/*
+@brief:拓扑排序
+*/
+template <typename T>
+void Bstree<T>::Topsoft()
+{
+    graph.Topsort();
 }
 
 

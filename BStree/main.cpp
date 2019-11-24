@@ -25,7 +25,6 @@ void random_get(int *buffer, int count, int min, int max)
         {
             if (num == buffer[j])
             {
-
                 num = rand() % min + (max-min);
                 j = 0;
                 continue;
@@ -87,6 +86,8 @@ int main()
     cout << "删除后的树：\n" << bstree;
     bstree.buildgraph();
     bstree.showgraph();
+    cout << "拓扑排序为：\n";
+    bstree.Topsoft();
     delete number;
     return 0;
 }

@@ -10,6 +10,9 @@
 
 #include <iostream>
 #include <vector>
+#include <map>
+#include <queue>
+#include <cassert>
 
 
 
@@ -27,7 +30,7 @@ public:
     ~Graph();
     void add_vertex(T vname);   // 添加顶点
     void add_edge(T vname, T w);  // 添加边
-    void show();                // 显示图
+    void show() const;                // 显示图
     void Topsort();             // 拓扑排序
 };
 
@@ -70,23 +73,78 @@ void Graph<T>::add_edge(T vame, T w)
         edge.push_back(w);
         vertex.push_back(edge);
         vertex_count += 1;
+        add_vertex(w);
         return;
     }
     add_vertex(w); //新的顶点
 }
 
 
+/*
+@brief: 实现图的拓扑排序
+*/
+template <typename T>
+void Graph<T>::Topsort()
+{
+    assert(vertex_count != 0);  //图不能为空
+    std::map<T, int> indegree;  // 统计每个顶点的入度
+    int amount = 0;
+    // 先统计每个节点的入度
+    for(auto iter : vertex)
+    {
+        for(auto it = iter.begin(); it != iter.end(); it++)
+        {
+            if(it == iter.begin())
+                indegree.insert(std::pair<T, int>(*it, 0));
+            else
+                indegree[*it] ++;
+        }
+    }
+    
+    std::queue<T> qu; // 用来存放入度为0的节点
+    for(auto iter : vertex)
+    {
+        if(indegree[iter[0]] == 0)
+            qu.push(iter[0]);  // 入度为0的入队列
+    }
+    // 队列不为空
+    while(!qu.empty())
+    {
+        T ver = qu.front();
+        qu.pop();
+        std::cout << ver << "->";
+        for(auto iter : vertex)
+        {
+            // 找到这个结点的边
+            if(iter[0] == ver)
+            {
+                for(int i = 1; i < iter.size(); i++)
+                {
+                    indegree[iter[i]]--;
+                    if(indegree[iter[i]] == 0)
+                        qu.push(iter[i]);
+                }
+            }
+        }
+        amount++;
+    }
+    std::cout<< std::endl;
+    if(amount != vertex_count)
+        std::cout << "Graph has a cycle\n";
+}
+
 
 /*
 @brief: 打印建立的图
 */
 template <typename T>
-void Graph<T>::show()
+void Graph<T>::show() const
 {
+    assert(vertex_count != 0);
     std::cout << "建立的领接表如下\n";
-    for (auto iter = vertex.begin(); iter != vertex.end(); iter++)
+    for(auto iter = vertex.begin(); iter != vertex.end(); iter++)
     {
-        for (auto ite = (*iter).begin(); ite != (*iter).end(); ite++)
+        for(auto ite = (*iter).begin(); ite != (*iter).end(); ite++)
         {
             std::cout << *ite << "--> ";
         }
