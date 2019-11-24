@@ -12,7 +12,8 @@
                 "-std=c++11",
                 "${file}", 
                 "-o", "${fileBasenameNoExtension}.out",
-                "-I", "${workspaceFolder}/*.h"
+                "-I", "${workspaceFolder}/*.h",
+                "-I", "${workspaceFolder}/*.hpp"
               ],
               "group": {
                 "kind": "build",

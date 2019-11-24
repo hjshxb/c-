@@ -2,7 +2,8 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include "bstree.h"
+#include "bstree.hpp"
+#include "graph.hpp"
 
 using namespace std;
 
@@ -20,14 +21,16 @@ void random_get(int *buffer, int count, int min, int max)
     for (int i = 1; i < count; i++)
     {
         int num = rand() % min + (max-min);
-        for (int j = 0; j < i; j++)
+        for (int j = 0; j < i;)
         {
             if (num == buffer[j])
             {
 
                 num = rand() % min + (max-min);
                 j = 0;
+                continue;
             }
+            j++;
         }
         buffer[i] = num;
         cout <<  buffer[i] << "\t";
@@ -82,6 +85,8 @@ int main()
     cin >> num;
     tree.remove(num);
     cout << "删除后的树：\n" << bstree;
+    bstree.buildgraph();
+    bstree.showgraph();
     delete number;
     return 0;
 }

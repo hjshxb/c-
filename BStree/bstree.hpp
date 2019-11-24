@@ -1,8 +1,9 @@
-#ifndef BSTREE_H
-#define BSTREE_H
+#ifndef __BSTREE_H__
+#define __BSTREE_H__
 
 #include <iostream>
 #include <cassert>
+#include "graph.hpp"
 
 template <typename T>
 struct BSNode{
@@ -25,6 +26,7 @@ class Bstree
     typedef BSNode<T> Node;
 private:
     BSNode<T> *root;
+    Graph<T>  graph;
 public:
     Bstree():root(nullptr) {}
     Bstree(Bstree<T> &bstree);   //浅拷贝
@@ -40,6 +42,8 @@ public:
     T findmax();                 // 找到最大值
     T findmin();                 // 找到最小值
     void remove(T key);    // 删除
+    void buildgraph();    // 建立二叉树的图
+    void showgraph();    // 显示图
     template <typename U>
     friend std::ostream& operator<<(std::ostream &os, Bstree<U> &bstree);
     template <typename U>
@@ -56,6 +60,7 @@ protected:
     T _findmax(Node *node);
     T _findmin(Node *node);
     BSNode<T>* _remove(Node *node, T key);
+    void _buildgraph(Node *node);
 };
 
 
@@ -101,6 +106,8 @@ BSNode<T>* Bstree<T>::_insert(Node *node, T key)
     
     return node;
 } 
+
+
 
 
 /*
@@ -269,6 +276,7 @@ T Bstree<T>:: findmin()
     return _findmin(root);
 }
 
+
 //内部实现
 template <typename T>
 T Bstree<T>:: _findmin(Node *node)
@@ -322,6 +330,43 @@ BSNode<T>* Bstree<T>::_remove(Node *node, T key)
         }
     }
     return node;
+}
+
+
+/*
+@brief: 建立二叉树的图(邻接表)
+*/
+template <typename T>
+void Bstree<T>::buildgraph()
+{
+    _buildgraph(root);
+}
+
+//内部实现
+template <typename T>
+void Bstree<T>::_buildgraph(Node * node)
+{
+    if (node == nullptr)
+        return;
+    else
+    {
+        if(node->lchild)
+            graph.add_edge(node->data, node->lchild->data);
+        if(node->rchild)
+            graph.add_edge(node->data, node->rchild->data);
+        _buildgraph(node->lchild);
+        _buildgraph(node->rchild);
+    }
+}
+
+
+/*
+@brief: 显示图(邻接表)
+*/
+template <typename T>
+void Bstree<T>::showgraph()
+{
+    graph.show();
 }
 
 
