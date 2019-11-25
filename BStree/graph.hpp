@@ -90,11 +90,11 @@ void Graph<T>::Topsort()
     std::map<T, int> indegree;  // 统计每个顶点的入度
     int amount = 0;
     // 先统计每个节点的入度
-    for(auto iter : vertex)
+    for (auto iter : vertex)
     {
-        for(auto it = iter.begin(); it != iter.end(); it++)
+        for (auto it = iter.begin(); it != iter.end(); it++)
         {
-            if(it == iter.begin())
+            if (it == iter.begin())
                 indegree.insert(std::pair<T, int>(*it, 0));
             else
                 indegree[*it] ++;
@@ -104,7 +104,7 @@ void Graph<T>::Topsort()
     std::queue<T> qu; // 用来存放入度为0的节点
     for(auto iter : vertex)
     {
-        if(indegree[iter[0]] == 0)
+        if (indegree[iter[0]] == 0)
             qu.push(iter[0]);  // 入度为0的入队列
     }
     // 队列不为空
@@ -113,10 +113,10 @@ void Graph<T>::Topsort()
         T ver = qu.front();
         qu.pop();
         std::cout << ver << "->";
-        for(auto iter : vertex)
+        for (auto iter : vertex)
         {
             // 找到这个结点的边
-            if(iter[0] == ver)
+            if (iter[0] == ver)
             {
                 for(int i = 1; i < iter.size(); i++)
                 {
@@ -129,7 +129,7 @@ void Graph<T>::Topsort()
         amount++;
     }
     std::cout<< std::endl;
-    if(amount != vertex_count)
+    if (amount != vertex_count)
         std::cout << "Graph has a cycle\n";
 }
 
@@ -142,9 +142,9 @@ void Graph<T>::show() const
 {
     assert(vertex_count != 0);
     std::cout << "建立的领接表如下\n";
-    for(auto iter = vertex.begin(); iter != vertex.end(); iter++)
+    for (auto iter = vertex.begin(); iter != vertex.end(); iter++)
     {
-        for(auto ite = (*iter).begin(); ite != (*iter).end(); ite++)
+        for (auto ite = (*iter).begin(); ite != (*iter).end(); ite++)
         {
             std::cout << *ite << "--> ";
         }

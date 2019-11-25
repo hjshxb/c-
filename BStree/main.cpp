@@ -55,39 +55,45 @@ int main()
     bstree.inorder();
     cout << endl;
     cout << "树的高度" << bstree.treehigh() << endl;
-    cout << "树的叶子数" << bstree.countleaf() << endl;
+    // cout << "树的叶子数" << bstree.countleaf() << endl;
     cout << "请插入数值！\n";
     cin >> bstree;
     cout << bstree;
     cout << "树的高度" << bstree.treehigh() << endl;
-    cout << "树的叶子数" << bstree.countleaf() << endl;
+    // cout << "树的叶子数" << bstree.countleaf() << endl;
     // 测试深拷贝
     Bstree<int> treeclone;
-    treeclone = bstree.clone();
+    treeclone = bstree;
     cout << "输出深拷贝的树\n" << treeclone << "输入插入值\n";
     cin >> treeclone;
     cout << "输出深拷贝的树\n" << treeclone;
     cout << "输出源树\n" << bstree;
-    // 测试浅拷贝
-    Bstree<int> tree;
-    tree = bstree;
-    cout << "输出浅拷贝的树\n" << tree << "输入插入值\n";
-    cin >> tree;
-    cout << "输出浅拷贝的树\n" << tree;
-    cout << "输出源树\n" << bstree;
     // 测试查找
-    cout << bstree.findmax() << endl;
-    cout << bstree.findmin() << endl;
+    for (int i = 0; i < 2; i++)
+    {
+        cout << "输入查找的数字\n";
+        int key;
+        cin >> key;
+        auto get = treeclone.find(key);
+        if (get)
+            cout << "地址为" << get << endl;
+        else
+            cout << "二叉树中无该值\n";
+    }
+    cout << "最大值为：" << bstree.findmax() << endl;
+    cout << "最小值为：" << bstree.findmin() << endl;
     // 测试删除
     cout << "请输入要删除的值\n";
     int num;
     cin >> num;
-    tree.remove(num);
-    cout << "删除后的树：\n" << bstree;
+    bstree.remove(num);
+    cout << "删除后的树：\n" << bstree; 
+    // 测试图的建立以及拓扑
     bstree.buildgraph();
+    cout << "邻接表为：\n";
     bstree.showgraph();
     cout << "拓扑排序为：\n";
     bstree.Topsoft();
-    delete number;
+    delete [] number;
     return 0;
 }

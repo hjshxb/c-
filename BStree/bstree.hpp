@@ -29,7 +29,7 @@ private:
     Graph<T>  graph;
 public:
     Bstree():root(nullptr) {}
-    Bstree(Bstree<T> &bstree);   //浅拷贝
+    Bstree(Bstree<T> &bstree);   //拷贝
     ~Bstree();
     bool isempty() const
      {return root == nullptr;}
@@ -45,6 +45,7 @@ public:
     void buildgraph();    // 建立二叉树的图
     void showgraph();    // 显示图
     void Topsoft();      // 拓扑排序
+    Bstree<T>& operator=(Bstree &bstree);
     template <typename U>
     friend std::ostream& operator<<(std::ostream &os, Bstree<U> &bstree);
     template <typename U>
@@ -72,7 +73,7 @@ protected:
 template <typename T>
 Bstree<T>::Bstree(Bstree<T> &bstree)
 {
-    *this->root = bstree.root;
+    *this = bstree.clone();
 }
 
 
@@ -387,9 +388,21 @@ void Bstree<T>::Topsoft()
 template <typename U>
 std::ostream& operator<<(std::ostream &os, Bstree<U> &bstree)
 {
+    assert(!bstree.isempty());
     bstree.inorder();
     os << std::endl;
     return os;
+}
+
+
+/*
+重载 = 
+*/
+template <typename T>
+Bstree<T>& Bstree<T>::operator=(Bstree<T> &bstree)
+{
+    this->root = _clone(bstree.root);
+    return *this;
 }
 
 
