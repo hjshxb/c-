@@ -1,5 +1,5 @@
-#ifndef __BSTREE_H__
-#define __BSTREE_H__
+#ifndef __BSTREE_HPP
+#define __BSTREE_HPP
 
 #include <iostream>
 #include <cassert>

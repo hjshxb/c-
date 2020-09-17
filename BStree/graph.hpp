@@ -5,8 +5,8 @@
  * @Last Modified by: huangjie
  * @Last Modified time: 2019-11-23 22:39:31
  */
-#ifndef __GRAPH_H__
-#define __GRAPH_H__
+#ifndef __GRAPH_HPP
+#define __GRAPH_HPP
 
 #include <iostream>
 #include <vector>
